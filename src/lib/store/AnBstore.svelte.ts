@@ -52,22 +52,24 @@ const default_state = `Protocol: KeyEx
 
 Types:
   Agent A,B,s;
+  Number NA,NB;
   Symmetric_key KAB;
-  Function sk
+  Function sk,pre
 
 Knowledge:
-  A: A,B,s,sk(A,s);
-  B: A,B,s,sk(B,s);
-  s: A,B,s,sk(A,s),sk(B,s)
+  A: A,B,s,sk(A,s),pre;
+  B: A,B,s,sk(B,s),pre;
+  s: A,B,s,sk(A,s),sk(B,s),pre
+  where A!=B
 
 Actions:
-  A->s: A,B
-  s->A: {| KAB,B |}sk(A,s), {| KAB,A |}sk(B,s)
-  A->B: {| KAB,A |}sk(B,s)
+  B->A: A,B,NB
+  A->s: A,B,NA,NB
+  s->A: {| KAB,A,B,NA |}sk(A,s), {| KAB,A,B,NB |}sk(B,s)
+  A->B: {| KAB,A,B,NB |}sk(B,s)
  
 Goals: 
   A authenticates s on KAB,B
   B authenticates s on KAB,A
   KAB secret between A,B,s
-
 `;

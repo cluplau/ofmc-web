@@ -18,6 +18,12 @@ ofmc:	$(SRCFILES) $(GENERATED)
 
 ########################
 
+wasm:	$(SRCFILES) $(GENERATED)
+	wasm32-wasi-ghc $(PACKAGESHIT) -XNoMonomorphismRestriction -XScopedTypeVariables -fspec-constr-count=5 -static -package base --make -O2 -Wno-tabs Main.hs -o ../../static/ofmc/ofmc.wasm
+# wasm32-wasi-ghc FFIMain.hs -o ../../static/ofmc/ofmc.wasm -no-hs-main -optl-mexec-model=reactor -optl-Wl,--export=hs_init,runOfmc -XNoMonomorphismRestriction -XScopedTypeVariables -fspec-constr-count=5 -static -package base --make -O2 -Wno-tabs
+
+########################
+
 NewIfLexer.hs:	NewIfLexer.x
 	alex NewIfLexer.x
 

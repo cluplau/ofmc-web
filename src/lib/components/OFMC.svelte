@@ -1,34 +1,14 @@
 <script lang="ts">
-	import { init, WASI } from '@wasmer/wasi';
+	import type AnBstore from '$lib/store/AnBstore.svelte';
+	import OFMCstore from '$lib/store/ofmc.svelte';
 
-	let { exitCode, stdout, stderr } = $props();
-
-	async function runWasm() {
-		await init();
-
-		let wasi = new WASI({
-			args: []
-		});
-
-		// Load WASM file
-		const moduleBytes = await fetch('ofmc/ofmc.wasm');
-		const module = await WebAssembly.compileStreaming(moduleBytes);
-		await wasi.instantiate(module, {});
-		exitCode = wasi.start();
-		stdout = wasi.getStdoutString();
-		stderr = wasi.getStderrString();
-
-		// console.log(`${stdout}(exit code: ${exitCode})`);
-		// console.log(`${stderr}(exit code: ${exitCode})`);
-	}
-
-	runWasm();
+	let { ofmc }: { ofmc: OFMCstore } = $props();
 </script>
 
-<pre class="overflow-auto text-wrap text-[lightgrey]">
-	{#if exitCode == 0}
-		{stdout}
+<pre class="w-full overflow-auto text-wrap text-[lightgrey]">
+	{#if ofmc.exitCode == 0}
+		{ofmc.stdout}
 	{:else}
-		{stderr}
+		{ofmc.stderr}
 	{/if}
 </pre>
