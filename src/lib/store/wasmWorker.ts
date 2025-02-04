@@ -19,7 +19,6 @@ self.onmessage = async function (event) {
 	});
 
 	const response = await fetch('/ofmc/ofmc.wasm');
-	console.log(response);
 	const module = await WebAssembly.compileStreaming(response);
 	await wasi.instantiate(module, {});
 

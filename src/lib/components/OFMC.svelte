@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type AnBstore from '$lib/store/AnBstore.svelte';
 	import OFMCstore from '$lib/store/ofmc.svelte';
 
 	let { ofmc }: { ofmc: OFMCstore } = $props();

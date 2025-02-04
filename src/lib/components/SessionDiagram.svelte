@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { default as mermaid, type MermaidConfig, type RunOptions } from 'mermaid';
+	import { default as mermaid, type MermaidConfig } from 'mermaid';
 
 	let { diagram_text }: { diagram_text: string } = $props();
 
