@@ -1,3 +1,5 @@
+import { localState } from '@sv-use/core';
+
 interface Action {
 	sender: string;
 	receiver: string;
@@ -5,9 +7,9 @@ interface Action {
 }
 
 class AnBstore {
-	input: string = $state(default_state);
+	input = localState('anb_input', default_state);
 	agents: string[] = $derived.by(() => {
-		const actorsSection = this.input.match(/Types:\n\s*Agent (.*?);/);
+		const actorsSection = this.input.current.match(/Types:\n\s*Agent (.*?);/);
 		if (!actorsSection) return [];
 
 		return actorsSection[1].split(',').map((actor) => actor.trim());
@@ -21,7 +23,7 @@ class AnBstore {
 		const actionRegex = /([A-Za-z]+)->([A-Za-z]+):\s*(.*)/g;
 
 		let match;
-		while ((match = actionRegex.exec(this.input)) !== null) {
+		while ((match = actionRegex.exec(this.input.current)) !== null) {
 			const sender = match[1];
 			const receiver = match[2];
 			const message = match[3].trim();
@@ -51,7 +53,7 @@ export default AnBstore;
 const default_state = `Protocol: KeyEx
 
 Types:
-  Agent A,B,s;
+  Agent B,A,s;
   Number NA,NB;
   Symmetric_key KAB;
   Function sk,pre

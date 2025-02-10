@@ -11,6 +11,9 @@ importers:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
         version: 0.2.3(esbuild@0.24.2)
+      '@sv-use/core':
+        specifier: ^1.11.0
+        version: 1.11.0(svelte@5.19.6)
       '@wasmer/wasi':
         specifier: ^1.2.2
         version: 1.2.2
@@ -540,6 +543,11 @@ packages:
     resolution: {integrity: sha512-k3MVFD9Oq+laHkw2N2v7ILgoa9017ZMF/inTtHzyTVZjYs9cSH18sdyAf6spBAJIGwJ5UaC7et2ZH1WCdlhkMw==}
     cpu: [x64]
     os: [win32]
+
+  '@sv-use/core@1.11.0':
+    resolution: {integrity: sha512-jlY05zwNW/P2nGyhkJpHH5sspZOceDQUwhep6KQSqRrcCsuex//lHE0Z6HTe3R6clW9qvMAA+ChGX1TrosR0VQ==}
+    peerDependencies:
+      svelte: ^5.0.0
 
   '@sveltejs/adapter-auto@4.0.0':
     resolution: {integrity: sha512-kmuYSQdD2AwThymQF0haQhM8rE5rhutQXG4LNbnbShwhMO4qQGnKaaTy+88DuNSuoQDi58+thpq8XpHc1+oEKQ==}
@@ -2816,6 +2824,10 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.34.1':
     optional: true
+
+  '@sv-use/core@1.11.0(svelte@5.19.6)':
+    dependencies:
+      svelte: 5.19.6
 
   '@sveltejs/adapter-auto@4.0.0(@sveltejs/kit@2.17.0(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.19.6)(vite@6.0.11(jiti@1.21.7)(yaml@2.7.0)))(svelte@5.19.6)(vite@6.0.11(jiti@1.21.7)(yaml@2.7.0)))':
     dependencies:

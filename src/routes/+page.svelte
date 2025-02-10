@@ -18,10 +18,11 @@
 				<section
 					class="relative box-border flex h-full w-full overflow-hidden rounded-lg border-2 border-solid border-cyan-800"
 				>
-					<MonacoEditor bind:value={store.input} language="yaml" />
+					<MonacoEditor bind:value={store.input.current} />
 
-					<Button class="absolute bottom-0 right-0 z-10" onclick={() => ofmc.run(store.input)}
-						>Run</Button
+					<Button
+						class="absolute bottom-0 right-0 z-10"
+						onclick={() => ofmc.run(store.input.current)}>Run</Button
 					>
 				</section>
 			</Resizable.Pane>

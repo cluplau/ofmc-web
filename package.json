@@ -46,6 +46,7 @@
 	},
 	"dependencies": {
 		"@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+		"@sv-use/core": "^1.11.0",
 		"@wasmer/wasi": "^1.2.2",
 		"mermaid": "^11.4.1",
 		"monaco-editor": "^0.52.2"

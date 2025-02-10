@@ -14,7 +14,7 @@
 		theme?: string;
 	}
 
-	let { value = $bindable(), language = 'html', theme = 'vs-dark' }: Props = $props();
+	let { value = $bindable(), language = 'yaml', theme = 'vs-dark' }: Props = $props();
 
 	onMount(() => {
 		(async () => {
