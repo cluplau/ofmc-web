@@ -1,0 +1,30 @@
+Protocol: Signup
+
+Types:
+  Agent W,A,s; 
+  Number NA, NW, Payload;
+  Symmetric_key KAW;
+  Function pk, sk
+
+Knowledge:
+  A: A, W, s, pk(s), sk(A, s);
+  W: A, W, s, pk(s), pk(W), inv(pk(W)), sk(W, s);
+  s: A, W, s, pk(s), inv(pk(s)), pk(W), sk(A, s), sk(W, s)
+
+  where A!=W
+
+Actions:
+  W->A: NW
+  A->s: A, W, NA, NW 
+  s->A: {| KAW, A, W, NA, NW |}sk(A, s), 
+        {| KAW, A, W, NA, NW |}sk(W, s)
+  A->W: {| KAW, A, W, NA, NW |}sk(W, s)
+  
+  W->A: {|Payload|}KAW
+
+Goals: 
+  A authenticates s on W,KAW
+  W authenticates s on A,KAW
+  KAW secret between A,W,s
+  
+  Payload secret between A,W

@@ -1,5 +1,10 @@
 import { localState } from '@sv-use/core';
 
+interface OFMCFile {
+	name: string;
+	content: string;
+}
+
 interface Action {
 	sender: string;
 	receiver: string;
@@ -7,9 +12,11 @@ interface Action {
 }
 
 class AnBstore {
-	input = localState('anb_input', default_state);
+	current = localState('ofmc_files_current', 0);
+	files = localState('ofmc_files', defaultFiles);
+	current_input = $derived(this.files.current[this.current.current]);
 	agents: string[] = $derived.by(() => {
-		const actorsSection = this.input.current.match(/Types:\n\s*Agent (.*?);/);
+		const actorsSection = this.current_input.content.match(/Types:\n\s*Agent (.*?);/);
 		if (!actorsSection) return [];
 
 		return actorsSection[1].split(',').map((actor) => actor.trim());
@@ -23,7 +30,7 @@ class AnBstore {
 		const actionRegex = /([A-Za-z]+)->([A-Za-z]+):\s*(.*)/g;
 
 		let match;
-		while ((match = actionRegex.exec(this.input.current)) !== null) {
+		while ((match = actionRegex.exec(this.current_input.content)) !== null) {
 			const sender = match[1];
 			const receiver = match[2];
 			const message = match[3].trim();
@@ -50,7 +57,10 @@ class AnBstore {
 
 export default AnBstore;
 
-const default_state = `Protocol: KeyEx
+const defaultFiles: OFMCFile[] = [
+	{
+		name: 'KeyEx',
+		content: `Protocol: KeyEx
 
 Types:
   Agent B,A,s;
@@ -69,9 +79,25 @@ Actions:
   A->s: A,B,NA,NB
   s->A: {| KAB,A,B,NA |}sk(A,s), {| KAB,A,B,NB |}sk(B,s)
   A->B: {| KAB,A,B,NB |}sk(B,s)
- 
+  
 Goals: 
   A authenticates s on KAB,B
   B authenticates s on KAB,A
   KAB secret between A,B,s
-`;
+`
+	}
+];
+
+export const newFile: OFMCFile = {
+	name: 'New File',
+	content: `Protocol: New Protocol
+
+Types:
+
+Knowledge:
+
+Actions:
+  
+Goals: 
+`
+};
